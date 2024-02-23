@@ -21,10 +21,9 @@ function arenaSweep() {
     }
 }
 
-context.fillstyle = '#';
+context.fillStyle = '#';
 context.fillRect(0, 0, canvas.width, canvas.height);
 
-// T Piece
 const matrix = [
     [0, 0, 0],
     [1, 1, 1],
@@ -100,8 +99,21 @@ function createPiece(type) {
 }
 
 function draw(){
-    context.fillStyle = '#000';
+    context.fillStyle = '#FFFFFF';
     context.fillRect(0, 0, canvas.width, canvas.height);
+
+    context.strokeStyle = '#CCCCCC'; // Color of the grid lines
+    for (let x = 0; x <= canvas.width; x += 2) {
+        context.moveTo(x, 0);
+        context.lineTo(x, canvas.height);
+        context.stroke();
+    }
+    for (let y = 0; y <= canvas.height; y += 2) {
+        context.beginPath();
+        context.moveTo(0, y);
+        context.lineTo(canvas.width, y);
+        context.stroke();
+    }
     
     drawMatrix(arena, {x: 0, y: 0});
     drawMatrix(player.matrix, player.pos);
@@ -183,7 +195,7 @@ function playerRotate(dir) {
 function rotate(matrix, dir) {
     for (let y = 0; y < matrix.length; ++y) {
         for (let x = 0; x < y; ++x) {
-            //tuple switch
+            //tuple switch!
             [
                 matrix[x][y],
                 matrix[y][x],
@@ -205,17 +217,25 @@ let dropCounter = 0;
 let dropInterval = 1000;
 
 let lastTime = 0;
+let animationId;
+let gamePaused = false; // Add a variable to track whether the game is paused or not
+
 function update(time = 0) {
-    const deltaTime = time - lastTime;
-    lastTime = time;
+    if (!gamePaused) {
+        const deltaTime = time - lastTime;
+        lastTime = time;
 
-    dropCounter += deltaTime;
-    if (dropCounter > dropInterval) {
-        playerDrop();
-    }   
+        dropCounter += deltaTime;
+        if (dropCounter > dropInterval) {
+            playerDrop();
+        }   
 
-    draw();
-    requestAnimationFrame(update);
+        draw();
+        animationId = requestAnimationFrame(update);
+    } else {
+        // If the game is paused, simply re-request the animation frame
+        animationId = requestAnimationFrame(update);
+    }
 }
 
 function updateScore() {
@@ -224,13 +244,13 @@ function updateScore() {
 
 const colors = [
     null,
-    '#DD0AB2',
-    '#01EDFA',
-    '#ff971d',
-    '#0000ff',
-    '#FEFB34',
-    '#53DA3F',
-    '#EA141C',
+    '#800080', /* T Piece */
+    '#01EDFA', /* I Piece */
+    '#ff7f00', /* L Piece */
+    '#0000ff', /* J Piece */
+    '#FEFB34', /* O Piece */
+    '#53DA3F', /* S Piece */
+    '#EA141C', /* Z Piece */
 ];
 
 const arena = createMatrix(12, 20);
@@ -254,6 +274,29 @@ document.addEventListener('keydown', event => {
     } else if (event.keyCode === 88) {
         playerRotate(1);
     }
+});
+
+const playButton = document.querySelector('.play');
+const pauseButton = document.querySelector('.pause');
+
+// By default make pause button disabled
+pauseButton.disabled = true;
+
+playButton.addEventListener('click', () => {
+    if (!gamePaused) {
+        // Only start the game if it's not already running
+        gamePaused = false;
+        pauseButton.disabled = false;
+        playButton.disabled = true;
+        update(); // Start the game loop
+    }
+});
+
+pauseButton.addEventListener('click', () => {
+    gamePaused = true;
+    playButton.disabled = false;
+    pauseButton.disabled = true;
+    cancelAnimationFrame(animationId); // Stop the game loop
 });
 
 playerReset();

@@ -10,5 +10,15 @@ body {
 
 canvas {
   border: solid 1px #000;
-  height: 90vh;
+  height: 60vh;
+}
+
+.score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-container p {
+  margin-bottom: 5px;
 }

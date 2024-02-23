@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="./styles/main.css" />
     <script defer src="./scripts/app.js"></script>
   </head>
-  <title>tetris</title>
   <body>
-    <div id="score"></div>
+    <div class="score-container">
+      <p>Score:</p>
+      <div id="score"></div>
+    </div>
     <canvas id="tetris" width="240" height="400"></canvas>
+    <div class="card">
+      <button class="play">Play</button>
+      <button class="pause">Pause</button>
+    </div>
   </body>
 </html>
