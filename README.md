@@ -5,15 +5,12 @@ This is a remake of the classic Tetris game, designed to look and feel like the 
 
 - [Project One - Tetris](#project-One---Tetris-️)
   - [Table of Contents](#table-of-contents)
-  - [Description 📝](#description-)
   - [Features ✨](#Features)
   - [Tech Stack 🛠️](#tech-stack-️)
   - [Project Structure 🗂️](#project-structure-️)
-  - [Installation 💻](#installation-)
 
 
 ## Features ✨
-
 - Classic Tetris gameplay
 - Gameboy-style design
 - Score, level, and lines cleared tracking
