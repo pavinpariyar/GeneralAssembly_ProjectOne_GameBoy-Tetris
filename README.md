@@ -1,4 +1,4 @@
-# Project One - GameBoy Tetris 🎮*
+# Project One - GameBoy Tetris 🎮
 
 https://pavinpariyar.github.io/GeneralAssembly_ProjectOne_Tetris/
 
